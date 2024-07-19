@@ -129,8 +129,6 @@ You can run with ``pytest --cache-clear --flake8`` to override this.
 Notes
 -----
 
-The repository of this plugin is at https://github.com/tholo/pytest-flake8
-
 For more info on `pytest`_ see http://pytest.org
 
 The code is partially based on Ronny Pfannschmidt's `pytest-codecheckers`_ plugin.

@@ -1,21 +1,22 @@
 # coding=utf8
 """Unit tests for flake8 pytest plugin."""
+
 from __future__ import print_function
 
 import py
 import pytest
 
-pytest_plugins = "pytester",
+pytest_plugins = ("pytester",)
 
 
 def test_version():
     """Verify we can get version."""
     import pytest_flake8
+
     assert pytest_flake8.__version__
 
 
 class TestIgnores:
-
     """Test ignores."""
 
     @pytest.fixture
@@ -23,6 +24,7 @@ class TestIgnores:
         """Create a test file."""
         testdir = request.getfixturevalue("testdir")
         import sys
+
         print(testdir, file=sys.stderr)
         p = testdir.makepyfile("")
         p.write("class AClass:\n    pass\n       \n\n# too many spaces")
@@ -31,6 +33,7 @@ class TestIgnores:
     def test_ignores(self, tmpdir):
         """Verify parsing of ignore statements."""
         from pytest_flake8 import Ignorer
+
         ignores = ["E203", "b/?.py E204 W205", "z.py ALL", "*.py E300"]
         ign = Ignorer(ignores)
         assert ign(tmpdir.join("a/b/x.py")) == "E203 E204 W205 E300".split()
@@ -77,7 +80,9 @@ class TestIgnores:
         ])
 
     def test_w293w292(self, testdir, example):
-        result = testdir.runpytest("--flake8", )
+        result = testdir.runpytest(
+            "--flake8",
+        )
         result.stdout.fnmatch_lines([
             # "*plugins*flake8*",
             "*W293*",
@@ -87,14 +92,18 @@ class TestIgnores:
 
     def test_mtime_caching(self, testdir, example):
         testdir.tmpdir.ensure("hello.py")
-        result = testdir.runpytest("--flake8", )
+        result = testdir.runpytest(
+            "--flake8",
+        )
         result.stdout.fnmatch_lines([
             # "*plugins*flake8*",
             "*W293*",
             "*W292*",
         ])
         result.assert_outcomes(passed=1, failed=1)
-        result = testdir.runpytest("--flake8", )
+        result = testdir.runpytest(
+            "--flake8",
+        )
         result.stdout.fnmatch_lines([
             "*W293*",
             "*W292*",
@@ -104,7 +113,9 @@ class TestIgnores:
             [pytest]
             flake8-ignore = *.py W293 W292 W391
         """)
-        result = testdir.runpytest("--flake8", )
+        result = testdir.runpytest(
+            "--flake8",
+        )
         result.assert_outcomes(passed=2)
 
 
@@ -114,11 +125,14 @@ def test_extensions(testdir):
         markers = flake8
         flake8-extensions = .py .pyx
     """)
-    testdir.makefile(".pyx", """
+    testdir.makefile(
+        ".pyx",
+        """
         @cfunc
         def f():
             pass
-    """)
+    """,
+    )
     result = testdir.runpytest("--flake8")
     result.stdout.fnmatch_lines([
         "*collected 1*",
@@ -163,14 +177,20 @@ def test_run_on_init_file(testdir):
 def test_unicode_error(testdir):
     x = testdir.tmpdir.join("x.py")
     import codecs
+
     f = codecs.open(str(x), "w", encoding="utf8")
-    f.write(py.builtin._totext("""
+    f.write(
+        py.builtin._totext(
+            """
 # coding=utf8
 
 accent_map = {
     u'\\xc0': 'a',  # À -> a  non-ascii comment crashes it
 }
-""", "utf8"))
+""",
+            "utf8",
+        )
+    )
     f.close()
     # result = testdir.runpytest("--flake8", x, "-s")
     # result.stdout.fnmatch_lines("*non-ascii comment*")

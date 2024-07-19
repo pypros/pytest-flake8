@@ -17,31 +17,32 @@ def pytest_addoption(parser):
     """Hook up additional options."""
     group = parser.getgroup("general")
     group.addoption(
-        '--flake8', action='store_true',
-        help="perform some flake8 sanity checks on .py files")
+        '--flake8',
+        action='store_true',
+        help="perform some flake8 sanity checks on .py files",
+    )
     parser.addini(
-        "flake8-ignore", type="linelist",
+        "flake8-ignore",
+        type="linelist",
         help="each line specifies a glob pattern and whitespace "
-             "separated FLAKE8 errors or warnings which will be ignored, "
-             "example: *.py W293")
+        "separated FLAKE8 errors or warnings which will be ignored, "
+        "example: *.py W293",
+    )
+    parser.addini("flake8-max-line-length", help="maximum line length")
+    parser.addini("flake8-max-doc-length", help="maximum doc line length")
+    parser.addini("flake8-max-complexity", help="McCabe complexity threshold")
     parser.addini(
-        "flake8-max-line-length",
-        help="maximum line length")
+        "flake8-show-source",
+        type="bool",
+        help="show the source generate each error or warning",
+    )
+    parser.addini("flake8-statistics", type="bool", help="count errors and warnings")
     parser.addini(
-        "flake8-max-doc-length",
-        help="maximum doc line length")
-    parser.addini(
-        "flake8-max-complexity",
-        help="McCabe complexity threshold")
-    parser.addini(
-        "flake8-show-source", type="bool",
-        help="show the source generate each error or warning")
-    parser.addini(
-        "flake8-statistics", type="bool",
-        help="count errors and warnings")
-    parser.addini(
-        "flake8-extensions", type="args", default=[".py"],
-        help="a list of file extensions, for example: .py .pyx")
+        "flake8-extensions",
+        type="args",
+        default=[".py"],
+        help="a list of file extensions, for example: .py .pyx",
+    )
 
 
 def pytest_configure(config):
@@ -66,13 +67,15 @@ def pytest_collect_file(file_path, path, parent):
         flake8ignore = config._flake8ignore(path)
         if flake8ignore is not None:
             item = Flake8File.from_parent(
-                parent, path=file_path,
+                parent,
+                path=file_path,
                 flake8ignore=flake8ignore,
                 maxlength=config._flake8maxlen,
                 maxdoclength=config._flake8maxdoclen,
                 maxcomplexity=config._flake8maxcomplexity,
                 showsource=config._flake8showsource,
-                statistics=config._flake8statistics)
+                statistics=config._flake8statistics,
+            )
             return item
 
 
@@ -83,15 +86,21 @@ def pytest_unconfigure(config):
 
 
 class Flake8Error(Exception):
-    """ indicates an error during flake8 checks. """
+    """indicates an error during flake8 checks."""
 
 
 class Flake8File(pytest.File):
-
-    def __init__(self, *k,
-                 flake8ignore=None, maxlength=None, maxdoclength=None,
-                 maxcomplexity=None, showsource=None, statistics=None,
-                 **kw):
+    def __init__(
+        self,
+        *k,
+        flake8ignore=None,
+        maxlength=None,
+        maxdoclength=None,
+        maxcomplexity=None,
+        showsource=None,
+        statistics=None,
+        **kw,
+    ):
         super().__init__(*k, **kw)
         self.flake8ignore = flake8ignore
         self.maxlength = maxlength
@@ -105,7 +114,6 @@ class Flake8File(pytest.File):
 
 
 class Flake8Item(pytest.Item):
-
     def __init__(self, *k, **kwargs):
         super().__init__(*k, **kwargs)
         self._nodeid += "::FLAKE8"
@@ -128,9 +136,11 @@ class Flake8Item(pytest.Item):
             pytest.skip("file(s) previously passed FLAKE8 checks")
 
     def runtest(self):
-        with BytesIO() as bo, TextIOWrapper(bo, encoding='utf-8') as to, \
-             BytesIO() as be, TextIOWrapper(be, encoding='utf-8') as te, \
-             redirect_stdout(to), redirect_stderr(te):
+        with BytesIO() as bo, TextIOWrapper(
+            bo, encoding='utf-8'
+        ) as to, BytesIO() as be, TextIOWrapper(
+            be, encoding='utf-8'
+        ) as te, redirect_stdout(to), redirect_stderr(te):
             found_errors = check_file(
                 self.fspath,
                 self.flake8ignore,
@@ -138,7 +148,7 @@ class Flake8Item(pytest.Item):
                 self.maxdoclength,
                 self.maxcomplexity,
                 self.showsource,
-                self.statistics
+                self.statistics,
             )
             to.flush()
             te.flush()
@@ -150,8 +160,10 @@ class Flake8Item(pytest.Item):
         # update mtime only if test passed
         # otherwise failures would not be re-run next time
         if hasattr(self.config, "_flake8mtimes"):
-            self.config._flake8mtimes[str(self.fspath)] = (self._flake8mtime,
-                                                           self.flake8ignore)
+            self.config._flake8mtimes[str(self.fspath)] = (
+                self._flake8mtime,
+                self.flake8ignore,
+            )
 
     def repr_failure(self, excinfo):
         if excinfo.errisinstance(Flake8Error):
@@ -188,7 +200,7 @@ class Ignorer:
 
     def __call__(self, path):
         l = []  # noqa: E741
-        for (glob, ignlist) in self.ignores:
+        for glob, ignlist in self.ignores:
             if not glob or path.fnmatch(glob):
                 if ignlist is None:
                     return None
@@ -196,8 +208,9 @@ class Ignorer:
         return l
 
 
-def check_file(path, flake8ignore, maxlength, maxdoclenght, maxcomplexity,
-               showsource, statistics):
+def check_file(
+    path, flake8ignore, maxlength, maxdoclenght, maxcomplexity, showsource, statistics
+):
     """Run flake8 over a single file, and return the number of failures."""
     args = []
     if maxlength:

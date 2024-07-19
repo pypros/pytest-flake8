@@ -29,7 +29,7 @@ dependencies = [
 ]
 
 [project.urls]
-Source = "https://github.com/tholo/pytest-flake8"
+Source = "https://github.com/coherent-oss/pytest-flake8"
 
 [project.entry-points.pytest11]
 flake8 = "pytest_flake8"

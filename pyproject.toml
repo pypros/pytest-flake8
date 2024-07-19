@@ -22,11 +22,12 @@ classifiers = [
 	"Topic :: Software Development :: Quality Assurance",
 	"Topic :: Software Development :: Testing",
 ]
-dynamic = ["version"]
+requires-python = ">=3.7"
 dependencies = [
 	"flake8>=4.0",
 	"pytest>=7.0",
 ]
+dynamic = ["version"]
 
 [project.urls]
 Source = "https://github.com/coherent-oss/pytest-flake8"

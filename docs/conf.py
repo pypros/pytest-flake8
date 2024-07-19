@@ -40,3 +40,7 @@ intersphinx_mapping = {
 
 # Preserve authored syntax for defaults
 autodoc_preserve_defaults = True
+
+intersphinx_mapping.update(
+    pytest=('https://docs.pytest.org/en/stable', None),
+)

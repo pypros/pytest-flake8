@@ -7,6 +7,9 @@ name = "pytest-flake8"
 authors = [
 	{ name = "Thorsten Lockert", email = "tholo@sigmasoft.com" },
 ]
+maintainers = [
+	{ name = "Jason R. Coombs", email = "jaraco@jaraco.com" },
+]
 description = "pytest plugin to check FLAKE8 requirements"
 readme = "README.rst"
 classifiers = [

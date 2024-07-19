@@ -1,23 +1,25 @@
-pytest plugin for efficiently checking PEP8 compliance 
-======================================================
-
 .. image:: https://img.shields.io/pypi/v/pytest-flake8.svg
-    :target: https://pypi.python.org/pypi/pytest-flake8
+   :target: https://pypi.org/project/pytest-flake8
 
 .. image:: https://img.shields.io/pypi/pyversions/pytest-flake8.svg
-    :target: https://pypi.python.org/pypi/pytest-flake8
 
-.. image:: https://img.shields.io/pypi/implementation/pytest-flake8.svg
-    :target: https://pypi.python.org/pypi/pytest-flake8
+.. image:: https://github.com/coherent-oss/pytest-flake8/actions/workflows/main.yml/badge.svg
+   :target: https://github.com/coherent-oss/pytest-flake8/actions?query=workflow%3A%22tests%22
+   :alt: tests
 
-.. image:: https://img.shields.io/pypi/status/pytest-flake8.svg
-    :target: https://pypi.python.org/pypi/pytest-flake8
+.. image:: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json
+    :target: https://github.com/astral-sh/ruff
+    :alt: Ruff
 
-.. image:: https://img.shields.io/github/issues/coherent-oss/pytest-flake8.svg
-    :target: https://github.com/coherent-oss/pytest-flake8/issues
+.. .. image:: https://readthedocs.org/projects/pytest-flake8/badge/?version=latest
+..    :target: https://pytest-flake8.readthedocs.io/en/latest/?badge=latest
 
-.. image:: https://img.shields.io/github/issues-pr/coherent-oss/pytest-flake8.svg
-    :target: https://github.com/coherent-oss/pytest-flake8/pulls
+.. image:: https://img.shields.io/badge/skeleton-2024-informational
+   :target: https://blog.jaraco.com/skeleton
+
+
+pytest plugin for efficiently checking PEP8 compliance 
+======================================================
 
 Usage
 -----

@@ -90,8 +90,11 @@ v1.1.2
   from jezdez@github
 - Register pytest marker for flake8; from alex-dr@github
 
-0.8, 0.8.1
-----------
+0.8.1
+-----
+
+0.8
+---
 
 - Allow running with no cacheprovider
 - Modernize use of fixtures in tests

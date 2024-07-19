@@ -1,3 +1,10 @@
+v1.1.2
+------
+
+- Revived project and relocated to
+  `coherent-oss <https://github.com/coherent-oss/pytest-flake8>`_.
+- Refreshed project metadata.
+
 1.1.1
 -----
 

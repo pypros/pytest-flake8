@@ -10,8 +10,6 @@ from flake8.options import config
 
 import pytest
 
-__version__ = '1.1.1'
-
 HISTKEY = "flake8/mtimes"
 
 

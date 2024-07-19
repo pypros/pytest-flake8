@@ -1,3 +1,12 @@
+v1.2.0
+======
+
+Features
+--------
+
+- Adopted jaraco/skeleton for packaging.
+
+
 v1.1.3
 ------
 

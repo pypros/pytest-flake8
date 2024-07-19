@@ -1,3 +1,8 @@
+v1.1.3
+------
+
+- More cleanup in the README.
+
 v1.1.2
 ------
 

@@ -13,14 +13,11 @@ pytest plugin for efficiently checking PEP8 compliance
 .. image:: https://img.shields.io/pypi/status/pytest-flake8.svg
     :target: https://pypi.python.org/pypi/pytest-flake8
 
-.. image:: https://travis-ci.org/tholo/pytest-flake8.svg?branch=master
-    :target: https://travis-ci.org/tholo/pytest-flake8
+.. image:: https://img.shields.io/github/issues/coherent-oss/pytest-flake8.svg
+    :target: https://github.com/coherent-oss/pytest-flake8/issues
 
-.. image:: https://img.shields.io/github/issues/tholo/pytest-flake8.svg
-    :target: https://github.com/tholo/pytest-flake8/issues
-
-.. image:: https://img.shields.io/github/issues-pr/tholo/pytest-flake8.svg
-    :target: https://github.com/tholo/pytest-flake8/pulls
+.. image:: https://img.shields.io/github/issues-pr/coherent-oss/pytest-flake8.svg
+    :target: https://github.com/coherent-oss/pytest-flake8/pulls
 
 Usage
 -----

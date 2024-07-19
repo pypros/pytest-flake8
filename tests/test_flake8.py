@@ -1,7 +1,5 @@
-# coding=utf8
 """Unit tests for flake8 pytest plugin."""
 
-from __future__ import print_function
 
 import pathlib
 

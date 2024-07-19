@@ -168,14 +168,14 @@ class Flake8Item(pytest.Item):
     def repr_failure(self, excinfo):
         if excinfo.errisinstance(Flake8Error):
             return excinfo.value.args[0]
-        return super(Flake8Item, self).repr_failure(excinfo)
+        return super().repr_failure(excinfo)
 
     def reportinfo(self):
         if self.flake8ignore:
-            ignores = "(ignoring %s)" % " ".join(self.flake8ignore)
+            ignores = "(ignoring {})".format(" ".join(self.flake8ignore))
         else:
             ignores = ""
-        return (self.fspath, -1, "FLAKE8-check%s" % ignores)
+        return (self.fspath, -1, f"FLAKE8-check{ignores}")
 
 
 class Ignorer:

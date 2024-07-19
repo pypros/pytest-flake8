@@ -54,11 +54,13 @@ class TestIgnores:
         testdir.tmpdir.ensure("tests/hello.py")
         result = testdir.runpytest("--flake8", "-s")
         result.assert_outcomes(passed=2)
-        result.stdout.fnmatch_lines([
-            "*collected 2*",
-            "*xy.py .*",
-            "*2 passed*",
-        ])
+        result.stdout.fnmatch_lines(
+            [
+                "*collected 2*",
+                "*xy.py .*",
+                "*2 passed*",
+            ]
+        )
 
     def test_ignores_all(self, testdir):
         """Verify success when all errors are ignored."""
@@ -73,21 +75,25 @@ class TestIgnores:
         testdir.tmpdir.ensure("tests/hello.py")
         result = testdir.runpytest("--flake8", "-s")
         result.assert_outcomes(passed=1)
-        result.stdout.fnmatch_lines([
-            "*collected 1*",
-            "*xy.py .*",
-            "*1 passed*",
-        ])
+        result.stdout.fnmatch_lines(
+            [
+                "*collected 1*",
+                "*xy.py .*",
+                "*1 passed*",
+            ]
+        )
 
     def test_w293w292(self, testdir, example):
         result = testdir.runpytest(
             "--flake8",
         )
-        result.stdout.fnmatch_lines([
-            # "*plugins*flake8*",
-            "*W293*",
-            "*W292*",
-        ])
+        result.stdout.fnmatch_lines(
+            [
+                # "*plugins*flake8*",
+                "*W293*",
+                "*W292*",
+            ]
+        )
         result.assert_outcomes(failed=1)
 
     def test_mtime_caching(self, testdir, example):
@@ -95,19 +101,23 @@ class TestIgnores:
         result = testdir.runpytest(
             "--flake8",
         )
-        result.stdout.fnmatch_lines([
-            # "*plugins*flake8*",
-            "*W293*",
-            "*W292*",
-        ])
+        result.stdout.fnmatch_lines(
+            [
+                # "*plugins*flake8*",
+                "*W293*",
+                "*W292*",
+            ]
+        )
         result.assert_outcomes(passed=1, failed=1)
         result = testdir.runpytest(
             "--flake8",
         )
-        result.stdout.fnmatch_lines([
-            "*W293*",
-            "*W292*",
-        ])
+        result.stdout.fnmatch_lines(
+            [
+                "*W293*",
+                "*W292*",
+            ]
+        )
         result.assert_outcomes(skipped=1, failed=1)
         testdir.makeini("""
             [pytest]
@@ -134,9 +144,11 @@ def test_extensions(testdir):
     """,
     )
     result = testdir.runpytest("--flake8")
-    result.stdout.fnmatch_lines([
-        "*collected 1*",
-    ])
+    result.stdout.fnmatch_lines(
+        [
+            "*collected 1*",
+        ]
+    )
     result.assert_outcomes(failed=1)
 
 
@@ -147,9 +159,11 @@ def test_ok_verbose(testdir):
     """)
     p = p.write(p.read() + "\n")
     result = testdir.runpytest("--flake8", "--verbose")
-    result.stdout.fnmatch_lines([
-        "*test_ok_verbose*",
-    ])
+    result.stdout.fnmatch_lines(
+        [
+            "*test_ok_verbose*",
+        ]
+    )
     result.assert_outcomes(passed=1)
 
 
@@ -160,10 +174,12 @@ def test_keyword_match(testdir):
             #
     """)
     result = testdir.runpytest("--flake8", "-mflake8")
-    result.stdout.fnmatch_lines([
-        "*E201*",
-        "*1 failed*",
-    ])
+    result.stdout.fnmatch_lines(
+        [
+            "*E201*",
+            "*1 failed*",
+        ]
+    )
     result.assert_outcomes(failed=1)
 
 

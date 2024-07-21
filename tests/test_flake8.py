@@ -1,8 +1,8 @@
 """Unit tests for flake8 pytest plugin."""
 
 import pathlib
+import textwrap
 
-import py
 import pytest
 
 pytest_plugins = ("pytester",)
@@ -167,22 +167,14 @@ def test_run_on_init_file(testdir):
 @pytest.mark.xfail("sys.platform == 'win32'")
 def test_unicode_error(testdir):
     x = testdir.tmpdir.join("x.py")
-    import codecs
+    content = textwrap.dedent("""
+    # coding=utf8
 
-    f = codecs.open(str(x), "w", encoding="utf8")
-    f.write(
-        py.builtin._totext(
-            """
-# coding=utf8
-
-accent_map = {
-    u'\\xc0': 'a',  # À -> a  non-ascii comment crashes it
-}
-""",
-            "utf8",
-        )
-    )
-    f.close()
+    accent_map = {
+        u'\\xc0': 'a',  # À -> a  non-ascii comment crashes it
+    }
+    """).lstrip()
+    x.write_text(content, encoding='utf-8')
     # result = run_pytest(testdir, x, "-s")
     # result.stdout.fnmatch_lines("*non-ascii comment*")
 

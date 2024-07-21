@@ -24,7 +24,7 @@ classifiers = [
 ]
 requires-python = ">=3.8"
 dependencies = [
-	"flake8 >= 5",
+	"flake8 >= 5, < 6",
 	"pytest >= 7.0",
 ]
 dynamic = ["version"]

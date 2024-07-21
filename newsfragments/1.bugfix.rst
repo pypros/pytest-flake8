@@ -1,0 +1,1 @@
+Declare minimum flake8 as v5.

@@ -10,6 +10,7 @@ Features
 v1.1.3
 ------
 
+- Fixed compatibility with flake8 v5. Now requires flake8 v5 or later.
 - More cleanup in the README.
 
 v1.1.2

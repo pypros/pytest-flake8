@@ -1,0 +1,1 @@
+Disabled the 'enabler' plugin when running tests.

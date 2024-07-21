@@ -8,6 +8,13 @@ import pytest
 pytest_plugins = ("pytester",)
 
 
+def run_pytest(testdir, *args):
+    """
+    Run pytest with flake8 enabled (and the enabler disabled).
+    """
+    return testdir.runpytest("-p", "no:enabler", "--flake8", *args)
+
+
 class TestIgnores:
     """Test ignores."""
 
@@ -44,7 +51,7 @@ class TestIgnores:
         """)
         testdir.tmpdir.ensure("xy.py")
         testdir.tmpdir.ensure("tests/hello.py")
-        result = testdir.runpytest("--flake8", "-s")
+        result = run_pytest(testdir, "-s")
         result.assert_outcomes(passed=2)
         result.stdout.fnmatch_lines([
             "*collected 2*",
@@ -63,7 +70,7 @@ class TestIgnores:
         """)
         testdir.tmpdir.ensure("xy.py")
         testdir.tmpdir.ensure("tests/hello.py")
-        result = testdir.runpytest("--flake8", "-s")
+        result = run_pytest(testdir, "-s")
         result.assert_outcomes(passed=1)
         result.stdout.fnmatch_lines([
             "*collected 1*",
@@ -72,9 +79,7 @@ class TestIgnores:
         ])
 
     def test_w293w292(self, testdir, example):
-        result = testdir.runpytest(
-            "--flake8",
-        )
+        result = run_pytest(testdir)
         result.stdout.fnmatch_lines([
             # "*plugins*flake8*",
             "*W293*",
@@ -84,18 +89,14 @@ class TestIgnores:
 
     def test_mtime_caching(self, testdir, example):
         testdir.tmpdir.ensure("hello.py")
-        result = testdir.runpytest(
-            "--flake8",
-        )
+        result = run_pytest(testdir)
         result.stdout.fnmatch_lines([
             # "*plugins*flake8*",
             "*W293*",
             "*W292*",
         ])
         result.assert_outcomes(passed=1, failed=1)
-        result = testdir.runpytest(
-            "--flake8",
-        )
+        result = run_pytest(testdir)
         result.stdout.fnmatch_lines([
             "*W293*",
             "*W292*",
@@ -105,9 +106,7 @@ class TestIgnores:
             [pytest]
             flake8-ignore = *.py W293 W292 W391
         """)
-        result = testdir.runpytest(
-            "--flake8",
-        )
+        result = run_pytest(testdir)
         result.assert_outcomes(passed=2)
 
 
@@ -125,7 +124,7 @@ def test_extensions(testdir):
             pass
     """,
     )
-    result = testdir.runpytest("--flake8")
+    result = run_pytest(testdir)
     result.stdout.fnmatch_lines([
         "*collected 1*",
     ])
@@ -138,7 +137,7 @@ def test_ok_verbose(testdir):
             pass
     """)
     p = p.write(p.read() + "\n")
-    result = testdir.runpytest("--flake8", "--verbose")
+    result = run_pytest(testdir, "--verbose")
     result.stdout.fnmatch_lines([
         "*test_ok_verbose*",
     ])
@@ -151,7 +150,7 @@ def test_keyword_match(testdir):
             a=[ 1,123]
             #
     """)
-    result = testdir.runpytest("--flake8", "-mflake8")
+    result = run_pytest(testdir, "-mflake8")
     result.stdout.fnmatch_lines([
         "*E201*",
         "*1 failed*",
@@ -161,7 +160,7 @@ def test_keyword_match(testdir):
 
 def test_run_on_init_file(testdir):
     d = testdir.mkpydir("tests")
-    result = testdir.runpytest("--flake8", d / "__init__.py")
+    result = run_pytest(testdir, d / "__init__.py")
     result.assert_outcomes(passed=1)
 
 
@@ -184,20 +183,20 @@ accent_map = {
         )
     )
     f.close()
-    # result = testdir.runpytest("--flake8", x, "-s")
+    # result = run_pytest(testdir, x, "-s")
     # result.stdout.fnmatch_lines("*non-ascii comment*")
 
 
 @pytest.mark.xfail(reason="flake8 is not properly registered as a marker")
 def test_strict(testdir):
     testdir.makepyfile("")
-    result = testdir.runpytest("--strict", "-mflake8")
+    result = testdir.runpytest("-p", "no:enabler", "--strict", "-mflake8")
     result.assert_outcomes(passed=1)
 
 
 def test_junit_classname(testdir):
     testdir.makepyfile("")
-    result = testdir.runpytest("--flake8", "--junit-xml=TEST.xml")
+    result = run_pytest(testdir, "--junit-xml=TEST.xml")
     junit = testdir.tmpdir.join("TEST.xml")
     j_text = pathlib.Path(junit).read_text(encoding='utf-8')
     result.assert_outcomes(passed=1)

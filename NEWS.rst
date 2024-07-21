@@ -1,3 +1,14 @@
+v1.2.2
+======
+
+Bugfixes
+--------
+
+- Pin to flake8<6 as it's incompatible. (#2)
+- Remove reference to py.builtin in tests. (#2)
+- Disabled the 'enabler' plugin when running tests. (#2)
+
+
 v1.2.1
 ======
 

@@ -1,3 +1,12 @@
+v1.2.1
+======
+
+Bugfixes
+--------
+
+- Declare minimum flake8 as v5. (#1)
+
+
 v1.2.0
 ======
 

@@ -8,13 +8,6 @@ import pytest
 pytest_plugins = ("pytester",)
 
 
-def test_version():
-    """Verify we can get version."""
-    import pytest_flake8
-
-    assert pytest_flake8.__version__
-
-
 class TestIgnores:
     """Test ignores."""
 

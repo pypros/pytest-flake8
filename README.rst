@@ -80,7 +80,7 @@ To bypass this caching mechanism, run the following command:
 
 Run tests with [tox](https://tox.wiki) (e.g. `pipx run tox`).
 
-For more information, you can take a look at the `skeleton <https://blog.jaraco.com/skeleton/>`_.
+For more information, take a look at the `skeleton <https://blog.jaraco.com/skeleton/>`_.
 
 
 Notes

@@ -78,42 +78,7 @@ To bypass this caching mechanism, run the following command:
 
     pytest --cache-clear --flake8
 
-Note to developers
-------------------
-
-Setup environment
-^^^^^^^^^^^^^^^^^
-
-Separate virtual environments(venv) should be set up.
-
-.. code-block:: bash
-
-    python3 -m venv .venv
-
-Switch to venv.
-
-.. code-block:: bash
-
-    source .venv/bin/activate
-
-Install tox
-^^^^^^^^^^^
-
-Separate virtual environments should be set up.
-
-.. code-block:: bash
-
-    pip install tox
-
-
-Run environment
-^^^^^^^^^^^^^^^
-
-Run tox.
-
-.. code-block:: bash
-
-    tox
+Run tests with [tox](https://tox.wiki) (e.g. `pipx run tox`).
 
 For more information, you can take a look at the `skeleton <https://blog.jaraco.com/skeleton/>`_.
 
